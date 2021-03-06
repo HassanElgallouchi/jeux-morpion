@@ -1,11 +1,5 @@
 const buttons = document.querySelectorAll("#game>div>button");
 const gameStatus = document.querySelector("#game_status");
-let lienRjouer = document.createElement("a");
-lienRjouer.setAttribute("href", "#");
-let textRejouer = document.createTextNode('Rejouer ?');
-lienRjouer.append(textRejouer)
-
-gameStatus.prepend(lienRjouer)
 
 let joueurActuel = "O";
 let statusGagnant = false;
@@ -13,23 +7,19 @@ let statusGagnant = false;
 let handleEvent = (e) => {
     let joueurO = "O";
     let joueurX = "X";
-
     if (statusGagnant) {
-        console.log("rejouer call");
-        console.log(statusGagnant);
-        return rejouer();
+        return;
     }
-    console.log("ach →" + statusGagnant);
     if (joueurActuel == joueurO) {
         joueurActuel = joueurX;
         e.target.textContent = joueurO
         gameStatus.textContent = `Joueur ${joueurX} c'est votre tour.`;
-        check("O")
+        check(joueurO)
     } else {
         joueurActuel = joueurO;
         e.target.textContent = joueurX
-        gameStatus.textContent = `Joueur ${joueurO} c'est votre tour.`
-        check("X")
+        gameStatus.textContent = `Joueur ${joueurO} c'est votre tour.`;
+        check(joueurX)
     }
 }
 
@@ -43,13 +33,12 @@ let main = () => {
     });
 }
 
-let rejouer = () => {
-    let btnRoujer = document.querySelector('#game_status a');
-    btnRoujer.addEventListener('click', () => {
+let rejouer = (symboleJoueur) => {
+    let btnRejouer = document.querySelector('#game_status a');
+    btnRejouer.addEventListener('click', () => {
         statusGagnant = false;
-        console.log("false");
         main();
-        console.log("main");
+        gameStatus.innerHTML = `Joueur ${symboleJoueur} c'est votre tour.`;
     })
 }
 
@@ -64,8 +53,8 @@ function check(symboleJoueur) {
         buttons[2].style.backgroundColor = "green";
         gameStatus.innerHTML = `<a href="#">Rejouer ?</a> <br/> Le joueur ${symboleJoueur} a gagné !`;
         statusGagnant = true;
+        rejouer(symboleJoueur);
     }
 }
-
 
 main();
