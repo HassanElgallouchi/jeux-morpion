@@ -1,5 +1,12 @@
 const buttons = document.querySelectorAll("#game>div>button");
 const gameStatus = document.querySelector("#game_status");
+let lienRjouer = document.createElement("a");
+lienRjouer.setAttribute("href", "#");
+let textRejouer = document.createTextNode('Rejouer ?');
+lienRjouer.append(textRejouer)
+
+gameStatus.prepend(lienRjouer)
+
 let joueurActuel = "O";
 let statusGagnant = false;
 
@@ -36,6 +43,16 @@ let main = () => {
     });
 }
 
+let rejouer = () => {
+    let btnRoujer = document.querySelector('#game_status a');
+    btnRoujer.addEventListener('click', () => {
+        statusGagnant = false;
+        console.log("false");
+        main();
+        console.log("main");
+    })
+}
+
 function check(symboleJoueur) {
     if (
         buttons[0].textContent == symboleJoueur &&
@@ -50,14 +67,5 @@ function check(symboleJoueur) {
     }
 }
 
-let rejouer = () => {
-    let btnRoujer = document.querySelector('#game_status a');
-    btnRoujer.addEventListener('click', () => {
-        statusGagnant = false;
-        console.log("false");
-        main();
-        console.log("main");
-    })
-}
 
 main();
