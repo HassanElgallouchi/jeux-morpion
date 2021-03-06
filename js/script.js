@@ -24,6 +24,11 @@ let handleEvent = (e) => {
 }
 
 let main = () => {
+
+
+    funcDernierGagnant();
+
+
     buttons.forEach(videButton => {
         videButton.innerHTML = "";
         videButton.style.backgroundColor = "";
@@ -34,6 +39,7 @@ let main = () => {
 }
 
 let rejouer = () => {
+
     let btnRejouer = document.querySelector('#game_status a');
     btnRejouer.addEventListener('click', () => {
         statusGagnant = false;
@@ -54,6 +60,27 @@ function check(symboleJoueur) {
         gameStatus.innerHTML = `<a href="#">Rejouer ?</a> <br/> Le joueur ${symboleJoueur} a gagné !`;
         statusGagnant = true;
         rejouer(symboleJoueur);
+
+
+        window.localStorage.setItem("dernier_gagnant", JSON.stringify(symboleJoueur));
+        funcDernierGagnant()
+    }
+}
+
+let funcDernierGagnant = () => {
+    if (window.localStorage.getItem("dernier_gagnant")) {
+        let dernierGagnant = JSON.parse(window.localStorage.getItem("dernier_gagnant"));
+        let d = dernierGagnant;
+        console.log(d);
+        let gameId = document.querySelector("#game");
+        gameId.appendChild(document.createElement("div")).setAttribute("class", "gagnant");
+        let divDernierGagnant = document.querySelector(".gagnant");
+        divDernierGagnant.style.backgroundColor = "#fff";
+        divDernierGagnant.style.marginTop = "10px";
+        divDernierGagnant.style.padding = "10px";
+
+        divDernierGagnant.innerHTML = `<strong>Dernier gagnant : </strong> ${dernierGagnant}`;
+
     }
 }
 
