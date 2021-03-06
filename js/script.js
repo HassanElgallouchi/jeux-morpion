@@ -2,12 +2,11 @@ const buttons = document.querySelectorAll("#game>div>button");
 const gameStatus = document.querySelector("#game_status");
 let joueurActuel = "O";
 let statusGagnant = false;
+let compteur = 0;
 
 let funcDernierGagnant = () => {
     if (window.localStorage.getItem("dernier_gagnant")) {
         let dernierGagnant = JSON.parse(window.localStorage.getItem("dernier_gagnant"));
-        let d = dernierGagnant;
-        console.log(d);
         let gameId = document.querySelector("#game");
         gameId.appendChild(document.createElement("div")).setAttribute("class", "gagnant");
         let divDernierGagnant = document.querySelector(".gagnant");
@@ -21,6 +20,7 @@ let funcDernierGagnant = () => {
 let handleEvent = (e) => {
     let joueurO = "O";
     let joueurX = "X";
+
     if (statusGagnant) {
         return;
     }
@@ -46,14 +46,16 @@ let main = () => {
     buttons.forEach(button => {
         button.addEventListener("click", handleEvent, { once: true })
     });
+
 }
 
 let rejouer = () => {
+    compteur = 0;
     let btnRejouer = document.querySelector('#game_status a');
     btnRejouer.addEventListener('click', () => {
         statusGagnant = false;
-        main();
         gameStatus.innerHTML = `Joueur X c'est votre tour.`;
+        main();
     })
 }
 
@@ -178,6 +180,15 @@ function check(symboleJoueur) {
         rejouer();
         window.localStorage.setItem("dernier_gagnant", JSON.stringify(symboleJoueur));
         funcDernierGagnant()
+    }
+
+    if (compteur == 9) {
+        gameStatus.innerHTML = `<a href="#">Rejouer ?</a> <br/> Partie null !`;
+        rejouer();
+        window.localStorage.setItem("dernier_gagnant", JSON.stringify("null"));
+        funcDernierGagnant()
+    } else {
+        compteur += 1;
     }
 }
 
