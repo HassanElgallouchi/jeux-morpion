@@ -33,12 +33,12 @@ let main = () => {
     });
 }
 
-let rejouer = (symboleJoueur) => {
+let rejouer = () => {
     let btnRejouer = document.querySelector('#game_status a');
     btnRejouer.addEventListener('click', () => {
         statusGagnant = false;
         main();
-        gameStatus.innerHTML = `Joueur ${symboleJoueur} c'est votre tour.`;
+        gameStatus.innerHTML = `Joueur X c'est votre tour.`;
     })
 }
 
